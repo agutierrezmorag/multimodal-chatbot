@@ -4,9 +4,11 @@ import os
 import httpx
 import streamlit as st
 from dotenv import load_dotenv
+from langchain.callbacks.tracers import LangChainTracer
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from langsmith import Client
 
 load_dotenv()
 
@@ -17,15 +19,23 @@ Every answer should have a binary value: OK or BAD.
 OK means that the condition of the fish is good enough for continued processing, 
 while BAD means it should be discarded for health reasons. 
 Please provide detailed reasoning for your decision."""
-
 HUMAN_MESSAGE = "Please analyze the image and provide a detailed explanation of the condition of the fish."
 
+LANGSMITH_CLIENT = Client(
+    api_key=st.secrets.langsmith.api_key,
+    api_url="https://api.smith.langchain.com",
+)
 
 if __name__ == "__main__":
     st.set_page_config(page_title="Multimodal Chatbot", layout="wide")
 
     if "response" not in st.session_state:
         st.session_state.response = None
+
+    tracer = LangChainTracer(
+        client=LANGSMITH_CLIENT,
+        project_name=st.secrets.langsmith.project,
+    )
 
     st.title("Multimodal Chatbot")
     col1, col2 = st.columns(2)
@@ -54,13 +64,19 @@ if __name__ == "__main__":
 
         upload_method = st.selectbox("Metodo de Subida", ["URL", "Archivo"])
         if upload_method == "URL":
-            image = st.text_input("URL de la Imagen")
+            image_url = st.text_input("URL de la Imagen")
+            if image_url:
+                st.image(image_url)
+                image_data = base64.b64encode(httpx.get(image_url).content).decode(
+                    "utf-8"
+                )
         else:
-            image = st.file_uploader("Subir Imagen", type=["jpg", "jpeg", "png"])
-
-        if image:
-            st.image(image)
-            image_data = base64.b64encode(httpx.get(image).content).decode("utf-8")
+            uploaded_image = st.file_uploader(
+                "Subir Imagen", type=["jpg", "jpeg", "png"]
+            )
+            if uploaded_image:
+                st.image(uploaded_image)
+                image_data = base64.b64encode(uploaded_image.read()).decode("utf-8")
 
     col3, col4 = st.columns(2)
     with col3:
@@ -99,7 +115,7 @@ if __name__ == "__main__":
         ):
             with st.spinner("Esperando respuesta del modelo..."):
                 st.session_state.response = chat_model.invoke(
-                    [system_message, human_message]
+                    [system_message, human_message], config={"callbacks": [tracer]}
                 )
     except Exception as e:
         st.error(e)
