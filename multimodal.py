@@ -51,12 +51,12 @@ if __name__ == "__main__":
                 if chosen_model == "OpenAI":
                     api_key = os.getenv("OPENAI_API_KEY")
                     if not api_key:
-                        api_key = st.text_input("API Key", type="password")
+                        api_key = st.text_input("API Key-a", type="password")
                     chat_model = ChatOpenAI(model="gpt-4o-mini", api_key=api_key)
                 elif chosen_model == "Anthropic":
                     api_key = os.getenv("ANTHROPIC_API_KEY")
                     if not api_key:
-                        api_key = st.text_input("API Key", type="password")
+                        api_key = st.text_input("API Key-b", type="password")
                     chat_model = ChatAnthropic(
                         model="claude-3-haiku-20240307", api_key=api_key
                     )
@@ -64,7 +64,7 @@ if __name__ == "__main__":
                 pass
         with col2:
             if not api_key:
-                api_key = st.text_input("API Key", type="password")
+                api_key = st.text_input("API Key-c", type="password")
         if not api_key:
             st.error("Por favor, ingrese su API Key")
 
