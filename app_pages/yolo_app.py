@@ -39,12 +39,6 @@ YOLOWORLD_MODELS = {
 }
 
 if __name__ == "__page__":
-    st.set_page_config(
-        page_title="Object Detection",
-        page_icon="🔍",
-        layout="wide",
-        initial_sidebar_state="expanded",
-    )
     run = None
     stop = None
 

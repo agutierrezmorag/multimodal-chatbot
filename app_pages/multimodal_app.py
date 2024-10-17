@@ -27,8 +27,6 @@ LANGSMITH_CLIENT = Client(
 )
 
 if __name__ == "__page__":
-    st.set_page_config(page_title="Multimodal Chatbot", layout="wide")
-
     if "response" not in st.session_state:
         st.session_state.response = None
 
