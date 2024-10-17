@@ -42,29 +42,31 @@ if __name__ == "__main__":
     image_data = None
     api_key = None
     chat_model = None
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 
     with st.sidebar:
         col1, col2 = st.columns(2)
         with col1:
+            api_key = st.text_input(
+                "API Key",
+                type="password",
+                value=openai_api_key or anthropic_api_key or "",
+            )
+        with col2:
             chosen_model = st.selectbox("Modelo IA", ["OpenAI", "Anthropic"])
             try:
                 if chosen_model == "OpenAI":
-                    api_key = os.getenv("OPENAI_API_KEY")
-                    if not api_key:
-                        api_key = st.text_input("API Key-a", type="password")
-                    chat_model = ChatOpenAI(model="gpt-4o-mini", api_key=api_key)
-                elif chosen_model == "Anthropic":
-                    api_key = os.getenv("ANTHROPIC_API_KEY")
-                    if not api_key:
-                        api_key = st.text_input("API Key-b", type="password")
+                    chat_model = ChatOpenAI(
+                        model="gpt-4o-mini", api_key=openai_api_key or api_key
+                    )
+                if chosen_model == "Anthropic":
                     chat_model = ChatAnthropic(
-                        model="claude-3-haiku-20240307", api_key=api_key
+                        model="claude-3-haiku-20240307",
+                        api_key=anthropic_api_key or api_key,
                     )
             except Exception as e:  # noqa: F841
                 pass
-        with col2:
-            if not api_key:
-                api_key = st.text_input("API Key-c", type="password")
         if not api_key:
             st.error("Por favor, ingrese su API Key")
 
