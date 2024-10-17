@@ -66,7 +66,7 @@ if __name__ == "__page__":
             model_display_name = st.selectbox("Variations", list(models_to_list.keys()))
             model_chosen = models_to_list[model_display_name]
         if models_variation == "YOLO":
-            if "11" in model_chosen or "10" in model_chosen:
+            if "11" in model_chosen:
                 with col1:
                     v11_variation = st.selectbox(
                         "Type",
