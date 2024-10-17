@@ -26,7 +26,7 @@ LANGSMITH_CLIENT = Client(
     api_url="https://api.smith.langchain.com",
 )
 
-if __name__ == "__main__":
+if __name__ == "__page__":
     st.set_page_config(page_title="Multimodal Chatbot", layout="wide")
 
     if "response" not in st.session_state:
