@@ -113,7 +113,7 @@ if __name__ == "__page__":
         stop = st.button("Stop", use_container_width=True, disabled=not run)
 
     uploaded_images = st.file_uploader(
-        "Sube una imagen",
+        "Upload images",
         key=st.session_state.file_uploader_key,
         type=["jpg", "png", "jpeg"],
         accept_multiple_files=True,
@@ -132,7 +132,7 @@ if __name__ == "__page__":
         with col1:
             if uploaded_image:
                 image = Image.open(uploaded_image)
-                st.image(image, caption="Imagen Original")
+                st.image(image, caption="Original Image")
 
         with col2:
             if run and image:
@@ -140,6 +140,6 @@ if __name__ == "__page__":
                 st.session_state.annotated_img = Image.fromarray(
                     results[0].plot()[..., ::-1]
                 )
-                st.image(st.session_state.annotated_img, caption="Imagen Anotada")
+                st.image(st.session_state.annotated_img, caption="Annotated Image")
     if stop:
         st.stop()
