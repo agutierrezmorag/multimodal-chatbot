@@ -8,35 +8,35 @@ from ultralytics import NAS, RTDETR, SAM, YOLO, YOLOWorld
 YOLO_FILES_DIR = "yolo_files/"
 os.makedirs(YOLO_FILES_DIR, exist_ok=True)
 
-YOLO_MODELS = [
-    os.path.join(YOLO_FILES_DIR, "yolo11.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov10n.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov9s.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov8n.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov7.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov6-n.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov5n.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov4n.pt"),
-    os.path.join(YOLO_FILES_DIR, "yolov3n.pt"),
-]
+YOLO_MODELS = {
+    "YOLO v11": os.path.join(YOLO_FILES_DIR, "yolo11.pt"),
+    "YOLO v10": os.path.join(YOLO_FILES_DIR, "yolov10n.pt"),
+    "YOLO v9s": os.path.join(YOLO_FILES_DIR, "yolov9-s.pt"),
+    "YOLO v8n": os.path.join(YOLO_FILES_DIR, "yolov8-n.pt"),
+    "YOLO v7": os.path.join(YOLO_FILES_DIR, "yolov7.pt"),
+    "YOLO v6-n": os.path.join(YOLO_FILES_DIR, "yolov6-n.pt"),
+    "YOLO v5n": os.path.join(YOLO_FILES_DIR, "yolov5-n.pt"),
+    "YOLO v4n": os.path.join(YOLO_FILES_DIR, "yolov4-n.pt"),
+    "YOLO v3n": os.path.join(YOLO_FILES_DIR, "yolov3-n.pt"),
+}
 
-SAM_MODELS = [
-    os.path.join(YOLO_FILES_DIR, "sam_b.pt"),
-    os.path.join(YOLO_FILES_DIR, "sam2_b.pt"),
-    os.path.join(YOLO_FILES_DIR, "mobile_sam.pt"),
-]
+SAM_MODELS = {
+    "SAM": os.path.join(YOLO_FILES_DIR, "sam_b.pt"),
+    "SAM2": os.path.join(YOLO_FILES_DIR, "sam2_b.pt"),
+    "Mobile SAM": os.path.join(YOLO_FILES_DIR, "mobile_sam.pt"),
+}
 
-NAS_MODELS = [
-    os.path.join(YOLO_FILES_DIR, "yolo_nas_s.pt"),
-]
+NAS_MODELS = {
+    "YOLO NAS S": os.path.join(YOLO_FILES_DIR, "yolo_nas_s.pt"),
+}
 
-RTDETR_MODELS = [
-    os.path.join(YOLO_FILES_DIR, "rtdetr-1.pt"),
-]
+RTDETR_MODELS = {
+    "RTDETR-1": os.path.join(YOLO_FILES_DIR, "rtdetr-1.pt"),
+}
 
-YOLOWORLD_MODELS = [
-    os.path.join(YOLO_FILES_DIR, "yolov8s-worldv2.pt"),
-]
+YOLOWORLD_MODELS = {
+    "YOLO v8s Worldv2": os.path.join(YOLO_FILES_DIR, "yolov8s-worldv2.pt"),
+}
 
 if __name__ == "__page__":
     st.set_page_config(
@@ -63,7 +63,8 @@ if __name__ == "__page__":
             )
             models_to_list = globals()[f"{models_variation}_MODELS"]
         with col2:
-            model_chosen = st.selectbox("Variations", models_to_list)
+            model_display_name = st.selectbox("Variations", list(models_to_list.keys()))
+            model_chosen = models_to_list[model_display_name]
         if models_variation == "YOLO":
             if "11" in model_chosen:
                 with col1:
@@ -97,7 +98,7 @@ if __name__ == "__page__":
                     elif v11_variation == "Classification":
                         model_chosen = f"{base}-cls.{ext}"
 
-                model = YOLO(model_chosen)
+            model = YOLO(model_chosen)
         elif models_variation == "SAM":
             model = SAM(model_chosen)
         elif models_variation == "NAS":
