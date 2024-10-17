@@ -1,3 +1,7 @@
+# YOLO files
+yolo_files/
+*.pt
+
 # Streamlit
 .streamlit/
 
