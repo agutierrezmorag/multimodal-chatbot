@@ -50,16 +50,21 @@ if __name__ == "__main__":
             try:
                 if chosen_model == "OpenAI":
                     api_key = os.getenv("OPENAI_API_KEY")
+                    if not api_key:
+                        api_key = st.text_input("API Key", type="password")
                     chat_model = ChatOpenAI(model="gpt-4o-mini", api_key=api_key)
-                if chosen_model == "Anthropic":
+                elif chosen_model == "Anthropic":
                     api_key = os.getenv("ANTHROPIC_API_KEY")
+                    if not api_key:
+                        api_key = st.text_input("API Key", type="password")
                     chat_model = ChatAnthropic(
                         model="claude-3-haiku-20240307", api_key=api_key
                     )
             except Exception as e:  # noqa: F841
                 pass
         with col2:
-            api_key = st.text_input("API Key", type="password", value=api_key)
+            if not api_key:
+                api_key = st.text_input("API Key", type="password")
         if not api_key:
             st.error("Por favor, ingrese su API Key")
 
