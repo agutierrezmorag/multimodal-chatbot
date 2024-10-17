@@ -10,14 +10,14 @@ os.makedirs(YOLO_FILES_DIR, exist_ok=True)
 
 YOLO_MODELS = {
     "YOLO v11": os.path.join(YOLO_FILES_DIR, "yolo11.pt"),
-    "YOLO v10": os.path.join(YOLO_FILES_DIR, "yolov10.pt"),
-    "YOLO v9s": os.path.join(YOLO_FILES_DIR, "yolov9-s.pt"),
-    "YOLO v8n": os.path.join(YOLO_FILES_DIR, "yolov8-n.pt"),
+    "YOLO v10": os.path.join(YOLO_FILES_DIR, "yolov10x.pt"),
+    "YOLO v9s": os.path.join(YOLO_FILES_DIR, "yolov9s.pt"),
+    "YOLO v8n": os.path.join(YOLO_FILES_DIR, "yolov8n.pt"),
     "YOLO v7": os.path.join(YOLO_FILES_DIR, "yolov7.pt"),
-    "YOLO v6-n": os.path.join(YOLO_FILES_DIR, "yolov6-n.pt"),
-    "YOLO v5n": os.path.join(YOLO_FILES_DIR, "yolov5-n.pt"),
-    "YOLO v4n": os.path.join(YOLO_FILES_DIR, "yolov4-n.pt"),
-    "YOLO v3n": os.path.join(YOLO_FILES_DIR, "yolov3-n.pt"),
+    "YOLO v6-n": os.path.join(YOLO_FILES_DIR, "yolov6n.pt"),
+    "YOLO v5n": os.path.join(YOLO_FILES_DIR, "yolov5n.pt"),
+    "YOLO v4n": os.path.join(YOLO_FILES_DIR, "yolov4n.pt"),
+    "YOLO v3n": os.path.join(YOLO_FILES_DIR, "yolov3n.pt"),
 }
 
 SAM_MODELS = {
