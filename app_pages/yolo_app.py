@@ -10,7 +10,7 @@ os.makedirs(YOLO_FILES_DIR, exist_ok=True)
 
 YOLO_MODELS = {
     "YOLO v11": os.path.join(YOLO_FILES_DIR, "yolo11.pt"),
-    "YOLO v10": os.path.join(YOLO_FILES_DIR, "yolov10n.pt"),
+    "YOLO v10": os.path.join(YOLO_FILES_DIR, "yolov10.pt"),
     "YOLO v9s": os.path.join(YOLO_FILES_DIR, "yolov9-s.pt"),
     "YOLO v8n": os.path.join(YOLO_FILES_DIR, "yolov8-n.pt"),
     "YOLO v7": os.path.join(YOLO_FILES_DIR, "yolov7.pt"),
@@ -66,7 +66,7 @@ if __name__ == "__page__":
             model_display_name = st.selectbox("Variations", list(models_to_list.keys()))
             model_chosen = models_to_list[model_display_name]
         if models_variation == "YOLO":
-            if "11" in model_chosen:
+            if "11" in model_chosen or "10" in model_chosen:
                 with col1:
                     v11_variation = st.selectbox(
                         "Type",
