@@ -8,7 +8,6 @@ from langchain.callbacks.tracers import LangChainTracer
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
-from langsmith import Client
 
 load_dotenv()
 
@@ -21,19 +20,11 @@ while BAD means it should be discarded for health reasons.
 Please provide detailed reasoning for your decision."""
 HUMAN_MESSAGE = "Please analyze the image and provide a detailed explanation of the condition of the fish."
 
-LANGSMITH_CLIENT = Client(
-    api_key=st.secrets.langsmith.api_key,
-    api_url="https://api.smith.langchain.com",
-)
-
 if __name__ == "__page__":
     if "response" not in st.session_state:
         st.session_state.response = None
 
-    tracer = LangChainTracer(
-        client=LANGSMITH_CLIENT,
-        project_name=st.secrets.langsmith.project,
-    )
+    tracer = LangChainTracer(project_name="Multimodal Chatbot")
 
     st.title("Multimodal Chatbot")
     col1, col2 = st.columns(2)
