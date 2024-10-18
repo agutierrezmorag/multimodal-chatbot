@@ -11,14 +11,12 @@ from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-SYSTEM_MESSAGE = """You are a helpful professional in a salmon processing plant.
-You are an expert at spotting any anomaly that the fish may have, such as discoloration, unusual texture, or signs of disease. 
-Your goal is to ensure that only high-quality fish proceed to the next stage of processing. 
-Every answer should have a binary value: OK or BAD. 
-OK means that the condition of the fish is good enough for continued processing, 
-while BAD means it should be discarded for health reasons. 
-Please provide detailed reasoning for your decision."""
-HUMAN_MESSAGE = "Please analyze the image and provide a detailed explanation of the condition of the fish."
+SYSTEM_MESSAGE = """Transcribe the data from this image into a structured format. \
+Extract any text, numbers, or tables present, and return the data as a pandas DataFrame. \
+Make sure the DataFrame is organized by columns for easy manipulation, with headers inferred  \
+from the content where appropriate. Ensure the text is accurate and aligned with the layout in \
+the image, and handle any irregularities like missing or misaligned data as best as possible."""
+HUMAN_MESSAGE = "Analyze the image and extract the data into a pandas DataFrame."
 
 if __name__ == "__page__":
     if "response" not in st.session_state:
