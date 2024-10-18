@@ -12,8 +12,8 @@ if __name__ == "__main__":
         icon=":material/groups:",
         default=True,
     )
-    news_chatbot_page = st.Page(
-        page="app_pages/news_chatbot.py",
+    df_page = st.Page(
+        page="app_pages/df_page.py",
         title="News Chatbot",
         icon=":material/news:",
     )
@@ -28,6 +28,6 @@ if __name__ == "__main__":
         icon=":material/center_focus_strong:",
     )
 
-    pages = [meeting_summary_page, news_chatbot_page, multimodal_page, yolo_page]
+    pages = [meeting_summary_page, df_page, multimodal_page, yolo_page]
     pg = st.navigation(pages)
     pg.run()
