@@ -14,8 +14,8 @@ if __name__ == "__main__":
     )
     df_page = st.Page(
         page="app_pages/df_page.py",
-        title="News Chatbot",
-        icon=":material/news:",
+        title="Dataframe Q&A",
+        icon=":material/analytics:",
     )
     multimodal_page = st.Page(
         page="app_pages/multimodal_app.py",
