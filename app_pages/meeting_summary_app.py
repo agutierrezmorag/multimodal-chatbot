@@ -12,18 +12,44 @@ load_dotenv()
 
 client = OpenAI()
 
-sys_msg_template = """Realiza un resumen del siguiente contexto, siguiendo este formato:
+sys_msg_template = """Genera un resumen detallado basado en el siguiente contexto. \
+Organiza la información utilizando los siguientes encabezados:
 # Resumen
-Aqui escribiras el resumen del contexto.
-# Puntos clave
-Aqui escribiras los puntos clave del contexto.
-# Observaciones
-Aqui escribiras las observaciones del contexto.
-# Conclusiones
-Aqui escribiras las conclusiones del contexto.
-        
+Ofrece un resumen claro y conciso del contenido presentado en el contexto. Destaca los temas principales.
+
+## Puntos clave
+Enumera los puntos más importantes o destacables del contexto, incluyendo datos relevantes, decisiones tomadas, y aspectos clave.
+
+## Observaciones
+Incluye cualquier observación adicional que pueda ser relevante, como comentarios sobre la dinámica de la reunión, temas secundarios, o información complementaria.
+
+## Conclusiones
+Proporciona las conclusiones o implicaciones derivadas del contexto, resaltando posibles próximas acciones o decisiones a tomar.
+
 El contexto es el siguiente:
 {context}"""
+
+DEFAULT_CONTEXT = """[Moderador]: Buenos días a todos, gracias por unirse a la reunión de hoy. Vamos a empezar con la actualización del proyecto de marketing. Carlos, ¿puedes comenzar?
+
+[Carlos]: Claro, hemos visto un crecimiento del 15% en el tráfico de nuestra campaña en redes sociales durante la última semana. Sin embargo, las conversiones no han subido al mismo ritmo. Estamos planeando ajustar los anuncios para enfocarnos más en la conversión de clientes potenciales.
+
+[Moderador]: Gracias, Carlos. ¿Hay alguna estimación de cuánto tiempo tomará ese ajuste?
+
+[Carlos]: Esperamos tener los cambios implementados para el final de la semana.
+
+[Moderador]: Perfecto. Pasando al siguiente punto, necesitamos revisar el presupuesto para el próximo trimestre. Sandra, ¿puedes actualizar al equipo sobre las proyecciones financieras?
+
+[Sandra]: Sí, con base en los gastos actuales y las expectativas de ingresos, proyectamos un aumento del 10% en el presupuesto de marketing, pero habrá una reducción en las áreas de desarrollo de producto debido a un retraso en la contratación de personal clave.
+
+[Moderador]: ¿Cuándo planeamos reanudar las contrataciones?
+
+[Sandra]: Probablemente a partir del próximo mes, una vez que tengamos la aprobación final del equipo ejecutivo.
+
+[Moderador]: Bien, entonces seguimos en ese plan. ¿Alguien tiene alguna otra cosa que añadir antes de cerrar la reunión?
+
+[Carlos]: Solo recordar que tenemos la reunión con el equipo de ventas mañana a las 10 AM.
+
+[Moderador]: Gracias, Carlos. Si no hay nada más, terminamos aquí. Que tengan un buen día."""
 
 
 @st.cache_data(show_spinner=False)
@@ -52,7 +78,9 @@ if __name__ == "__page__":
             if st.button("Transcribe", use_container_width=True):
                 st.session_state.transcription = transcribe_test_audio()
         st.session_state.transcription = st.text_area(
-            "Transcription", value=st.session_state.transcription
+            "Example Transcription",
+            value=st.session_state.get("transcription", DEFAULT_CONTEXT)
+            or DEFAULT_CONTEXT,
         )
         sys_msg = st.text_area("Prompt", value=sys_msg_template)
 
