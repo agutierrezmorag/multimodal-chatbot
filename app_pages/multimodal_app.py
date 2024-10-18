@@ -15,7 +15,8 @@ SYSTEM_MESSAGE = """Transcribe the data from this image into a structured format
 Extract any text, numbers, or tables present, and return the data as a pandas DataFrame. \
 Make sure the DataFrame is organized by columns for easy manipulation, with headers inferred  \
 from the content where appropriate. Ensure the text is accurate and aligned with the layout in \
-the image, and handle any irregularities like missing or misaligned data as best as possible."""
+the image, and handle any irregularities like missing or misaligned data as best as possible. \
+Do NOT tell the user how to extract the data, extract it yourself."""
 HUMAN_MESSAGE = "Analyze the image and extract the data into a pandas DataFrame."
 
 if __name__ == "__page__":
